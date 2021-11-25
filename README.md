@@ -11,7 +11,7 @@ In this implementation we use [FastPitch from Nvidia](https://github.com/NVIDIA/
 To use this implementation:
 1. Clone this repository
 2. Install requirements in requirments.txt 
-3. Add your data: audio files to wavs/ and training phoneme_transcriptions.txt to filelists/ and testing phoneme_transcriptions to phrases/ as it is right now
+3. Add your data: audio files to wavs/ and training and validating phoneme_transcriptions to filelists/ and testing phoneme_transcriptions to phrases/ as it is right now
 4. Run following command to extract pitch from your audio files and save files to wavs/pitch/:
 ```
 python prepare_dataset.py \
