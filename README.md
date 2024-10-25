@@ -1,43 +1,65 @@
 # Persian FastPitch
-Training FastPitch for Persian language as a Persian text-to-speech. FastPitch is a TTS model that generates mel-spectrograms from text and is newer and faster than Tacotron.
-In this implementation we use [FastPitch from Nvidia](https://github.com/NVIDIA/DeepLearningExamples/tree/master/PyTorch/SpeechSynthesis/FastPitch) and change it to train this model for persian language. We clone Nvidia-FastPitch and install its requirements and then do following changes:
-1. Prepare persian data: many audio files and phonemes sequence for each file (we use phoneme instead of text because of using english characters and solving the problem of not writing some vowels in the Persian text)
-2. Edit fastpitch/data_function.py beacause of erroe in google colab. You can see [this issue](https://github.com/NVIDIA/DeepLearningExamples/issues/1016)
-3. Edit cleaners.py in common/text/ according to used characters in phonemes
-4. Edit script/train.sh and train.py to change training parameters
-5. Edit scripts/inference_example.sh to change inferencing parameter
 
-## How to use
-To use this implementation:
-1. Clone this repository
-2. Install requirements in requirments.txt 
-3. Add your data: audio files to wavs/ and training and validating phoneme_transcriptions to filelists/ and testing phoneme_transcriptions to phrases/ as it is right now
-4. Run following command to extract pitch from your audio files and save files to wavs/pitch/:
-```
-python prepare_dataset.py \
-     --wav-text-filelists filelists/audio_text_train.txt \
-                          filelists/audio_text_val.txt \
-     --n-workers 16 \
-     --batch-size 1 \
-     --dataset-path 'wavs/' \
-     --extract-pitch \
-     --f0-method pyin
-```
-5. Run following command to install some dependencies:
-```
-git clone https://github.com/NVIDIA/apex
-cd apex; pip install -v --disable-pip-version-check --no-cache-dir --global-option="--cpp_ext" --global-option="--cuda_ext" ./
-bash scripts/download_cmudict.sh
-```
-6. Train the model on your data using following command. The checkpoints file will be in output/
-```
-bash scripts/train.sh
-```
-7. Download WaveGlow to get audio from mel-spectrogram:
-```
-bash scripts/download_waveglow.sh
-```
-8. Run following command to get result of test file that you put in phrase/ in step 3. The synthesized audio will be in output/audio_test_file/:
-```
-bash scripts/inference_example.sh
-```
+**Persian FastPitch** is a fast and efficient TTS model adapted to generate mel-spectrograms from Persian text, using the **FastPitch** architecture. FastPitch, originally developed by NVIDIA, offers a significant speed advantage over Tacotron-based models by directly predicting pitch and leveraging parallelized training.
+
+This implementation is based on [NVIDIA's FastPitch repository](https://github.com/NVIDIA/DeepLearningExamples/tree/master/PyTorch/SpeechSynthesis/FastPitch), adapted for Persian TTS. Changes made include language-specific adjustments and customizations to handle the unique aspects of Persian phonetics.
+
+## Key Modifications
+
+1. **Prepare Persian Data**: Collect Persian audio files and generate corresponding phoneme sequences for each. This uses phonemes instead of text for better accuracy, handling challenges like missing vowels in Persian script.
+2. **Resolve Colab Error in `data_function.py`**: Minor edits to address Colab compatibility issues. See [issue #1016](https://github.com/NVIDIA/DeepLearningExamples/issues/1016) for more details.
+3. **Update `cleaners.py` in `common/text/`**: Adapt character handling to Persian phonemes.
+4. **Customize Training Parameters**: Modify `scripts/train.sh` and `train.py` to fit Persian data.
+5. **Adjust Inference Parameters**: Update `scripts/inference_example.sh` for Persian-specific inference.
+
+---
+
+## How to Use
+
+1. **Clone this Repository**
+   ```bash
+   git clone https://github.com/Adibian/Persian-FastPitch.git
+   cd Persian-FastPitch
+   
+2. **Install Requirements**
+   ```bash
+   pip install -r requirements.txt
+
+3. **Add Your Data**
+     * Place audio files in wavs/
+     * Add training and validation phoneme transcriptions to filelists/
+     * Add test phoneme transcriptions to phrases/
+   
+4. **Extract Pitch**
+     * Run this command to extract pitch values for the audio files
+        ```bash
+          python prepare_dataset.py \
+              --wav-text-filelists filelists/audio_text_train.txt \
+                                   filelists/audio_text_val.txt \
+              --n-workers 16 \
+              --batch-size 1 \
+              --dataset-path 'wavs/' \
+              --extract-pitch \
+              --f0-method pyin
+5. **Install Additional Dependencies**
+     * Run the following to install NVIDIA Apex and download CMUdict:
+       ```bash
+          git clone https://github.com/NVIDIA/apex
+          cd apex; pip install -v --disable-pip-version-check --no-cache-dir --global-option="--cpp_ext" --global-option="--cuda_ext" ./
+          bash scripts/download_cmudict.sh
+       
+6. **Train the Model**
+     * Use this command to start training. Checkpoints will be saved in output/:
+     ```bash
+     bash scripts/train.sh
+     
+7. **Download WaveGlow Vocoder**
+     * WaveGlow is required to convert mel-spectrograms into audio. Download it using:
+       ```bash
+       bash scripts/download_waveglow.sh
+       
+7. **Run Inference**
+     * To synthesize audio for a test file in phrases/, run:
+       ```bash
+       bash scripts/inference_example.sh
+     * The synthesized audio will be saved in output/audio_test_file/.
