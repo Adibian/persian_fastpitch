@@ -63,3 +63,8 @@ This implementation is based on [NVIDIA's FastPitch repository](https://github.c
        ```bash
        bash scripts/inference_example.sh
      * The synthesized audio will be saved in output/audio_test_file/.
+
+## License  
+This project is based on [FastPitch](https://github.com/NVIDIA/DeepLearningExamples/tree/master/PyTorch/SpeechSynthesis/FastPitch),  
+which does not have a specified license.  
+The modifications for [your purpose, e.g., Persian TTS, improvements] are © 2025 Majid Adibian.  
