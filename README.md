@@ -67,4 +67,4 @@ This implementation is based on [NVIDIA's FastPitch repository](https://github.c
 ## License  
 This project is based on [FastPitch](https://github.com/NVIDIA/DeepLearningExamples/tree/master/PyTorch/SpeechSynthesis/FastPitch),  
 which does not have a specified license.  
-The modifications for [your purpose, e.g., Persian TTS, improvements] are © 2025 Majid Adibian.  
+The modifications for Persian TTS are © 2025 Majid Adibian.  
